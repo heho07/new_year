@@ -30,10 +30,10 @@ class Add_player extends Component {
 	    <div>
 	    	<form onSubmit={event => this.props.create_player_event(event)}>
 		        <label>
-		          Name:
+		          Spelare:
 		          <input type="text" value={this.props.name_input_val} onChange={event => this.props.name_input_handle_change(event)} />
 		        </label>
-		        <input type="submit" value="Submit" />
+		        <input type="submit" value="Lägg till spelare" />
 	      </form>
         <button onClick = {() => this.add_iron_gang()}>Alla ska med!</button>
 	    </div>

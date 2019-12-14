@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import Add_player from "./Add_players.jsx";
 import Display_players from "./Display_players.jsx";
+import Header from "./Header.jsx";
+
 
 class Home extends Component {
   // behövde skriva om koden med en konstruktor för att få tillgång till props
@@ -13,7 +15,13 @@ class Home extends Component {
 
     	potential_players:["Erik", "Herman", "Joakim", "Joel", "Max", "Markus", "Harmony", "Josefin", "Jennifer", "Valdemar"],
 
-    	nicknames:{
+    	
+
+    	status:"home",
+    };
+
+    this.valid_status = ["home", "game"];
+    this.nicknames = {
     		Erik:"Jesus",
     		Herman:"James",
     		Joakim:"Peter",
@@ -25,11 +33,7 @@ class Home extends Component {
     		Jennifer:"Matthew",
     		Valdemar:"Thomas",
     		//fyll i om fler
-    	},
-
-    	status:"home",
-    };
-
+    	};
 
   }
 
@@ -85,18 +89,29 @@ class Home extends Component {
 
   }
 
+  set_status(status_name){
+  	console.log(this.valid_status);
+  	if (this.valid_status.includes(status_name)) {
+  		this.setState({
+  			status:status_name,
+  		})
+  	}
+  	else{
+  		console.log("oopsie " + status_name + " är ej en giltig status");
+  	}
+  }
+
 
   render() {
 
   	let display = "";
-
-  	switch(this.state.status){
+  	let status = this.state.status;
+  	switch(status){
   		case "home":
   			display = (
   				<div>
-					<p>hej</p>
 			    	<img src = "https://i.imgur.com/Qf3Jw6e.jpg"/>
-			    	<button onClick = {() => console.log(this.state.players)}>knapp</button>
+			    	<button onClick = {() => console.log(this.state.players)}>console logga alla spelare</button>
 			    	<Add_player
 			    		name_input_handle_change = {new_val => this.name_input_handle_change(new_val)}
 			    		name_input_val = {this.state.name_input_val}
@@ -109,11 +124,19 @@ class Home extends Component {
 			    		remove_player = {name => this.remove_player(name)}
 			    	/>
 		    	</div>);
-
+  				break;
+  		default:
+  			console.log(this.state.status);
+  			display = (<div>
+  							<p>något blev fel lmao</p>
+						</div>);
   	}
 
   	return(
 	    <div>
+	    	<Header
+	    		set_status = {(status_name) => this.set_status(status_name)}
+	    	/>
 	    	{display}
 
 	    </div>
